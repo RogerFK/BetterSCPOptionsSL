@@ -46,14 +46,14 @@ namespace BSCPO
 				{
 					if (ev.Value is int value && ev.DefaultValue is int defaultValue)
 					{
-						multipliers.Add(maxHpKeys[ev.Key], (value / (float)defaultValue));
+						multipliers.Add(maxHpKeys[ev.Key], ((float) defaultValue / value));
 					}
 				}
 				else
 				{
 					if (ev.Value is int value && ev.DefaultValue is int defaultValue)
 					{
-						multipliers[maxHpKeys[ev.Key]] = (value / (float)defaultValue);
+						multipliers[maxHpKeys[ev.Key]] = ((float) defaultValue / value);
 					}
 				}
 
