@@ -21,23 +21,24 @@ namespace BSCPO
 	{
 		public override void OnDisable()
 		{
-			Info("Ok retard");
+			Info("Disabled Better SCP Options\nYou might even DM RogerFK about why you disabled the plugin!");
 		}
 
 		public override void OnEnable()
 		{
-			Info("Enhaced this retarded game");
+			Info("Enhaced this game");
 		}
-		[ConfigOption]
-		public readonly string[] healingAmount = new string[] { "3:6-4-8", "0:170-200", "5:120-150", "9:100-120-150", "10:100-150", "16:100-150", "17:150-200-220" };
+		[ConfigOption] // bscpo_healing_amount
+        public readonly string[] healingAmount = new string[] { "3:6-4-8", "0:170-200", "5:120-150", "9:100-120-150", "10:100-150", "16:100-150", "17:150-200-220" };
 		[ConfigOption]
 		public readonly bool multiplyHealingAmount = false;
 		public override void Register()
 		{
-			AddEventHandler(typeof(IEventHandlerSetConfig), new BetterSCPEvents(this), Smod2.Events.Priority.Low);
-			AddEventHandler(typeof(IEventHandlerPlayerHurt), new BetterSCPEvents(this));
-			AddEventHandler(typeof(IEventHandlerPlayerDie), new BetterSCPEvents(this));
-			AddEventHandler(typeof(IEventHandlerWaitingForPlayers), new BetterSCPEvents(this));
+            var Instance = new BetterSCPEvents(this);
+			AddEventHandler(typeof(IEventHandlerSetConfig), Instance, Smod2.Events.Priority.Low);
+			AddEventHandler(typeof(IEventHandlerPlayerHurt), Instance);
+			AddEventHandler(typeof(IEventHandlerPlayerDie), Instance);
+			AddEventHandler(typeof(IEventHandlerWaitingForPlayers), Instance);
 		}
 	}
 }
