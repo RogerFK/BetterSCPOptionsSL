@@ -167,7 +167,7 @@ namespace BSCPO
                 }
                 else if (!Enum.TryParse(splitted[0], out role))
                 {
-                    plugin.Error(+ splitted[0] + " isn't a valid role!");
+                    plugin.Error(splitted[0] + " isn't a valid role!");
                     continue;
                 }
                 
@@ -197,7 +197,7 @@ namespace BSCPO
             {
                 if (!healingAmounts.TryGetValue(Role.SCP_106, out int[] healAmounts)) return;
                 foreach (Player scp106 in PluginManager.Manager.Server.GetPlayers(Role.SCP_106))
-                    scp106.AddHealth((int)(healAmounts[UnityEngine.Random.Range(0, healAmounts.Length)]);
+                    scp106.AddHealth((int)(healAmounts[UnityEngine.Random.Range(0, healAmounts.Length)]));
             }
         }
     }
