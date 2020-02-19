@@ -1,24 +1,11 @@
-﻿using Smod2;
-using Smod2.Attributes;
-using Smod2.Config;
-using Smod2.EventHandlers;
+﻿using EXILED;
 
 namespace BSCPO
 {
-	[PluginDetails(
-		author = "RogerFK",
-		name = "Better SCP Options",
-		description = "Better Stuff for SCPs",
-		id = "rogerfk.betterscpoptions",
-		version = "1.0",
-		SmodMajor = 3,
-		SmodMinor = 5,
-		SmodRevision = 0,
-		configPrefix = "bscpo"
-		)]
 
-	public class BetterSCPPlugin : Plugin
+	public class BetterHPPlugin : Plugin
 	{
+		BetterHP events;
 		public override void OnDisable()
 		{
 			Info("Disabled Better SCP Options\nYou might even DM RogerFK about why you disabled the plugin!");
@@ -26,19 +13,13 @@ namespace BSCPO
 
 		public override void OnEnable()
 		{
+			events = new BetterHP();
 			Info("Enhaced this game");
 		}
-		[ConfigOption] // bscpo_healing_amount
-        public readonly string[] healingAmount = new string[] { "3:6-4-8", "0:170-200", "5:120-150", "9:100-120-150", "10:100-150", "16:100-150", "17:150-200-220" };
-		[ConfigOption]
-		public readonly bool multiplyHealingAmount = false;
-		public override void Register()
-		{
-            var Instance = new BetterSCPEvents(this);
-			AddEventHandler(typeof(IEventHandlerSetConfig), Instance, Smod2.Events.Priority.Low);
-			AddEventHandler(typeof(IEventHandlerPlayerHurt), Instance);
-			AddEventHandler(typeof(IEventHandlerPlayerDie), Instance);
-			AddEventHandler(typeof(IEventHandlerWaitingForPlayers), Instance);
-		}
+		public const string Version = "1.0.0";
+
+		public override string getName => $"BetterHP{Version}";
+
+		public override void OnReload(){}
 	}
 }
