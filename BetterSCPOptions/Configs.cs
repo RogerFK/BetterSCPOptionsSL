@@ -5,28 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using EXILED;
 
-namespace BetterSCPOptions
+namespace SCPBHP
 {
 	public static class Configs
 	{
-		public static uint scp173heal;
-		public static uint scp106heal;
-		public static uint scp049heal;
-		public static uint scp079heal;
-		public static uint scp096heal;
-		public static uint scp0492heal;
-		public static uint scp93953heal;
-		public static uint scp93989heal;
-
-		public static HashSet<RoleType> scpRoleTypes = new HashSet<RoleType> {
-			RoleType.Scp049,
-			RoleType.Scp0492,
-			RoleType.Scp079,
-			RoleType.Scp096,
-			RoleType.Scp106,
-			RoleType.Scp173,
-			RoleType.Scp93953,
-			RoleType.Scp93989
+		internal static Dictionary<RoleType, int> scpRoleTypes = new Dictionary<RoleType, int> {
+			{  RoleType.Scp049, 0 },
+			{  RoleType.Scp0492, 0 },
+			{  RoleType.Scp079, 0 },
+			{  RoleType.Scp096, 0 },
+			{  RoleType.Scp106, 0 },
+			{  RoleType.Scp173, 0 },
+			{  RoleType.Scp93953, 0 },
+			{  RoleType.Scp93989, 0 }
 		};
 		public static void ReloadConfigs()
 		{
@@ -47,29 +38,23 @@ namespace BetterSCPOptions
 			}
 			else 
 			{
-				Plugin.Info("how the fuck does this game even work wtf fuck this shit");
+				Plugin.Info("how the fuck does this game even work wtf is this shit");
 				return;
 			}
 			foreach(var role in ccm.Classes)
 			{
-				if(scpRoleTypes.Contains(role.roleId))
+				if(scpRoleTypes.ContainsKey(role.roleId))
 				{
-					int hp = Plugin.Config.GetInt(role.roleId.ToString() + "_hp");
+					string roleName = role.roleId.ToString();
+					int hp = Plugin.Config.GetInt(roleName + "_hp");
+					Plugin.Debug($"Read {roleName}_hp as: {hp}");
 					if (hp > 0)
 					{
+						Plugin.Debug($"Changed {roleName}_hp from {role.maxHP} to: {hp}");
 						role.maxHP = hp;
 					}
-					switch(role.roleId)
-					{
-							RoleType.Scp049,
-			RoleType.Scp0492,
-			RoleType.Scp079,
-			RoleType.Scp096,
-			RoleType.Scp106,
-			RoleType.Scp173,
-			RoleType.Scp93953,
-			RoleType.Scp93989
-					}
+					scpRoleTypes[role.roleId] = Plugin.Config.GetInt(roleName + "_heal");
+					Plugin.Debug($"Read {roleName}_heal as: {scpRoleTypes[role.roleId]}");
 				}
 			}
 			CharacterClassManager._staticClasses = ccm.Classes;

@@ -1,21 +1,25 @@
 ﻿using EXILED;
+using System;
 
-namespace BSCPO
+namespace SCPBHP
 {
-
 	public class BetterHPPlugin : Plugin
 	{
-		BetterHP events;
+		BetterHP evs;
 		public override void OnDisable()
 		{
-			Info("Disabled Better SCP Options\nYou might even DM RogerFK about why you disabled the plugin!");
+			Events.WaitingForPlayersEvent -= evs.WaitingForPlayers;
+			Events.PlayerDeathEvent -= evs.PlayerKill;
 		}
 
 		public override void OnEnable()
 		{
-			events = new BetterHP();
-			Info("Enhaced this game");
+			evs = new BetterHP();
+			BetterHP.hpLoaded = false;
+			Events.WaitingForPlayersEvent += evs.WaitingForPlayers;
+			Events.PlayerDeathEvent += evs.PlayerKill;
 		}
+
 		public const string Version = "1.0.0";
 
 		public override string getName => $"BetterHP{Version}";
